@@ -100,6 +100,22 @@ void *rd_kafka_group_result_copy_opaque(const void *src_groupres, void *opaque);
 /**@}*/
 
 /**
+ * @brief Records deletion result [ Error code + Error string ]
+ *
+ * @remark Public type.
+ * @remark Single allocation.
+ */
+struct rd_kafka_records_result_s {
+        rd_kafka_error_t *error; /**< Error object, or NULL on success. */
+};
+
+void rd_kafka_records_result_destroy(rd_kafka_records_result_t *records_res);
+void rd_kafka_records_result_free(void *ptr);
+
+rd_kafka_records_result_t *rd_kafka_records_result_new(rd_kafka_error_t *error);
+/**@}*/
+
+/**
  * @struct Node represents a broker.
  * It's the public type.
  */

@@ -224,6 +224,44 @@ void rd_kafka_acl_result_free(void *ptr) {
 }
 
 
+const rd_kafka_error_t *
+rd_kafka_records_result_error(const rd_kafka_records_result_t *recordsres) {
+        return recordsres->error;
+}
+
+/**
+ * @brief Allocates and return a records result, takes ownership of \p error
+ *        (unless NULL).
+ *
+ * @returns The new records result.
+ */
+rd_kafka_records_result_t *rd_kafka_records_result_new(rd_kafka_error_t *error) {
+        rd_kafka_records_result_t *records_res;
+
+        records_res = rd_calloc(1, sizeof(*records_res));
+
+        records_res->error = error;
+
+        return records_res;
+}
+
+/**
+ * @brief Destroy records_result
+ */
+void rd_kafka_records_result_destroy(rd_kafka_records_result_t *records_res) {
+        if (records_res->error)
+                rd_kafka_error_destroy(records_res->error);
+        rd_free(records_res);
+}
+
+/**
+ * @brief Destroy-variant suitable for rd_list free_cb use.
+ */
+void rd_kafka_records_result_free(void *ptr) {
+        rd_kafka_records_result_destroy((rd_kafka_acl_result_t *)ptr);
+}
+
+
 /**
  * @brief Create a new Node object.
  *

@@ -260,6 +260,7 @@ typedef struct rd_kafka_error_s rd_kafka_error_t;
 typedef struct rd_kafka_headers_s rd_kafka_headers_t;
 typedef struct rd_kafka_group_result_s rd_kafka_group_result_t;
 typedef struct rd_kafka_acl_result_s rd_kafka_acl_result_t;
+typedef struct rd_kafka_records_result_s rd_kafka_records_result_t;
 /* @endcond */
 
 
@@ -6568,7 +6569,16 @@ rd_kafka_group_result_name(const rd_kafka_group_result_t *groupres);
 RD_EXPORT const rd_kafka_topic_partition_list_t *
 rd_kafka_group_result_partitions(const rd_kafka_group_result_t *groupres);
 
+/**
+ * @brief Records result provides record deletion operation result information.
+ *
+ */
 
+/**
+ * @returns the error object for the given records result, or NULL on success.
+ */
+RD_EXPORT const rd_kafka_error_t *
+rd_kafka_records_result_error(const rd_kafka_records_result_t *recordsres);
 /**@}*/
 
 
